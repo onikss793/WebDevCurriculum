@@ -167,7 +167,7 @@ svg:hover {
   flex-direction: column;
 }
 
-.main-header-left > div {
+.main-header-left .heading {
   color: blue;
   font-size: 25px;
 }
