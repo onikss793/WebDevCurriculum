@@ -1,1 +1,36 @@
 /* TODO: 자유롭게 바탕화면 시스템의 CSS를 만들어 보세요! */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.desktop {
+  position: relative;
+  height: 100vh;
+  background-color: rgb(212, 211, 255);
+}
+
+.icon {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-color: teal;
+  border-radius: 50%;
+}
+
+.folder {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-color: red;
+}
+
+.window {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background-color: blue;
+}
