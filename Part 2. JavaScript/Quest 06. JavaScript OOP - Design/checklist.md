@@ -16,6 +16,7 @@
 현대에 이르러 객체 지향 프로그래밍도 매우 복잡해지면서 이를 간결하게 정리할 필요성이 생겼고, 디자인 패턴(프로그래밍 형식을 정하는 일종의 약속)이라는 것이 등장했다. 
 
 #### 객체 지향 5원칙 "SOLID"
+
   * Single Responsibility Principle | 단일 책임 원칙      : 객체는 오직 하나의 책임을 가진다. 예를 들어, 계산 기능을 갖고 있는 클래스가 있다고 했을 때 나중에 이 함수를 수정할 일이 있더라도 무조건 계산과 관련된 문제만 다루어야 한다. 
   * Open-Closed Principle           | 개방-패쇄 원칙      : 객체 기능의 확장에 대해서는 개방적, 수정에 대해서는 폐쇄적이어야 한다. 
   * Liskov Substitution Principle   | 리스코프 치환 원칙  : 부모 클래스가 들어갈 자리에 자식 클래스를 넣어도 계획대로 잘 작동해야 한다. 상위 클래스는 하위 클래스에서 추상화해야하는 기능만을 가지고 있어야 한다. 
@@ -61,7 +62,7 @@
 
 Prototype Object는 기본 속성으로 `constructor`와 `__proto__`를 가지고 있다. 여기서 `constructor`는 해당 함수를 가리키고, `__proto__`는 Prototype Link이다. 
 
-__proto__는 모든 객체가 가지고 있는 속성인데, 이는 부모 함수의 Prototype Object를 가리킨다. 특정 객체의 속성을 조회할 때, 만약 특정 객체가 그 속성을 갖고 있지 않을 경우 해당 속성을 찾기 위해 __proto__가 가리키고 있는 부모 함수의 Prototype Object를 조회한다. 해당 속성을 찾을 때까지 타고 올라가며 최종적으로 Object의 Prototype Object까지 조회한다. 이와 같은 형태를 Prototype Chain이라고 한다. 
+`__proto__`는 모든 객체가 가지고 있는 속성인데, 이는 부모 함수의 Prototype Object를 가리킨다. 특정 객체의 속성을 조회할 때, 만약 특정 객체가 그 속성을 갖고 있지 않을 경우 해당 속성을 찾기 위해 __proto__가 가리키고 있는 부모 함수의 Prototype Object를 조회한다. 해당 속성을 찾을 때까지 타고 올라가며 최종적으로 Object의 Prototype Object까지 조회한다. 이와 같은 형태를 Prototype Chain이라고 한다. 
 
 Prototype은 여러 객체가 하나의 객체를 공유하고 있기 때문에 메모리를 하나만 사용한다. 따라서 객체를 여러개 생성해야 할 때는 Prototype을 사용하는 것이 효율적이다. 그리고 Prototype의 속성만 수정함으로써 모든 객체를 재설정할 수도 있다. 
 
