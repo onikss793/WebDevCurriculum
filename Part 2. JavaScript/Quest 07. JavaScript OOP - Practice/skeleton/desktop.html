@@ -1,18 +1,37 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<link rel="stylesheet" href="./desktop.css">
-		<script src="./desktop.js"></script>
-	</head>
-	<body>
-		<section class="desktop">
-		</section>
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" href="./desktop.css" />
+        <script src="./desktop.js"></script>
+    </head>
+    <body>
+        <template class="desktop-template">
+            <section class="desktop" />
+        </template>
 
-		<script>
-			let myDesktop = new Desktop(
-				/* TODO: myDesktop 인스턴스의 생성자의 변수로 무엇이 들어가야 할까요? */
-			);
-		</script>
-	</body>
+        <template class="window-template">
+            <div class="window">
+                <div class="window-header">
+                    <span class="window-title"></span>
+                    <span class="window-close"></span>
+                </div>
+
+                <div class="window-content"></div>
+            </div>
+        </template>
+
+        <script>
+            const icons = [{ position: { x: 100, y: 100 }, title: "연습장" }];
+            const folders = [
+                { position: { x: 100, y: 200 }, title: "도큐멘트" },
+                { position: { x: 100, y: 300 }, title: "사진" },
+                { position: { x: 100, y: 400 }, title: "음악" }
+            ];
+
+            let firstDesktop = new Desktop(icons, folders);
+            let secDesktop = new Desktop(icons, folders);
+            /* TODO: myDesktop 인스턴스의 생성자의 변수로 무엇이 들어가야 할까요? */
+        </script>
+    </body>
 </html>
