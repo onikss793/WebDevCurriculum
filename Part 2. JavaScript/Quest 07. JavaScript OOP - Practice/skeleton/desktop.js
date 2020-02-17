@@ -104,10 +104,11 @@ class Draggable {
     };
 }
 
-class File extends Draggable {
+class File {
     constructor(desktopId) {
         super();
         this.desktopId = desktopId;
+        this.dragHandler = new Draggable(); // composition, mixin
     }
 
     createFile = (className, title) => {
