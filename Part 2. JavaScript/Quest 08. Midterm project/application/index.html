@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <link rel="stylesheet" href="reset.css" />
+        <link rel="stylesheet" href="index.css" />
+        <script src="index.js"></script>
+        <title>Point of Sale System</title>
+    </head>
+
+    <body>
+        <div class="pos">
+            <div class="pos-left">
+                <div class="cart">
+                    <table class="cart-table">
+                        <tbody>
+                            <tr>
+                                <th>순번</th>
+                                <th>상품명</th>
+                                <th>수량</th>
+                                <th>단가</th>
+                                <th>할인</th>
+                                <th>금액</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="tools">
+                    <ul class="bill"></ul>
+
+                    <div class="calc"></div>
+                </div>
+            </div>
+
+            <div class="pos-right">
+                <div class="board"></div>
+            </div>
+        </div>
+
+        <template class="cart-template">
+            <tr class="product"></tr>
+        </template>
+
+        <template class="calc-template">
+            <div class="calc-screen"></div>
+            <div class="calc-pads">
+                <div class="pad"></div>
+            </div>
+        </template>
+
+        <template class="bill-template">
+            <li class="bill-list">
+                <span class="option"></span>
+                <span class="option-result"></span>
+            </li>
+        </template>
+
+        <template class="menu-template">
+            <div class="menu">
+                <span class="menu-title"></span>
+            </div>
+        </template>
+
+        <script>
+            new Pos();
+        </script>
+    </body>
+</html>
+
+<!-- <div class="pad">8</div>
+<div class="pad">9</div>
+
+<div class="pad">4</div>
+<div class="pad">5</div>
+<div class="pad">6</div>
+
+<div class="pad">1</div>
+<div class="pad">2</div>
+<div class="pad">3</div>
+
+<div class="pad">0</div>
+<div class="pad">00</div>
+<div class="pad">000</div>
+
+<div class="pad">0</div>
+<div class="pad">CLR</div>
+<div class="pad">수량</div> -->
