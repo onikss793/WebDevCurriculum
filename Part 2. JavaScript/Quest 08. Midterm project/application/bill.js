@@ -1,5 +1,5 @@
 class Bill {
-    constructor() {
+    constructor(endPay) {
         this.options = [
             "amount",
             "total",
@@ -8,20 +8,51 @@ class Bill {
             "change",
             "paid"
         ];
-        this.createBill().getBillOptionElements();
+        this.endPay = endPay;
+        this.createBill();
+        this.getBillOptionElements();
     }
 
-    getData(cart) {
-        const products = cart.product;
-
-        this.amount = this.getAmount(products);
-        this.total = this.getTotal(products);
-        this.discount = this.discount;
-        this.toPay = this.getTotal(products);
-        this.paid = this.getPaid();
+    getData({ amount = 0, total = 0, discount = 0 } = {}) {
+        this.amount = amount;
+        this.total = total;
+        this.discount = discount;
+        this.toPay = total;
+        this.paid = this.pay();
         this.change = this.getChange();
 
-        return this;
+        this.printBill();
+    }
+
+    getChange() {
+        const change = this.paid - this.toPay > 0 ? this.paid - this.toPay : 0;
+
+        this.change = change;
+
+        return this.change;
+    }
+
+    pay(number = 0) {
+        if (number === 0) {
+            return 0;
+        } else {
+            this.paid += number;
+
+            this.getChange();
+        }
+
+        this.printBill();
+        this.emergeWhenPaidAll();
+    }
+
+    printBill() {
+        this.options.forEach(option => {
+            this.billOption[option].textContent = this.markComma(this[option]);
+        });
+    }
+
+    emergeWhenPaidAll() {
+        this.paid >= this.toPay && this.endPay();
     }
 
     createBill() {
@@ -29,8 +60,6 @@ class Bill {
             .cloneTemplate("bill-template")
             .appendTemplate("tools")
             .getElement("bill");
-
-        return this;
     }
 
     getBillOptionElements() {
@@ -40,16 +69,6 @@ class Bill {
                 [curr]: this.billList.querySelector(`.${curr}`)
             };
         }, {});
-
-        return this;
-    }
-
-    printBill() {
-        this.options.forEach(option => {
-            this.billOption[option].textContent = this.markComma(this[option]);
-        });
-
-        return this;
     }
 
     markComma(number = 0) {
@@ -67,53 +86,5 @@ class Bill {
         }
 
         return markedNum;
-    }
-
-    getPaid(number = 0) {
-        if (number === 0) {
-            return 0;
-        } else {
-            this.paid += number;
-
-            this.getChange();
-        }
-
-        return this;
-    }
-
-    getChange() {
-        const change = this.paid - this.toPay > 0 ? this.paid - this.toPay : 0;
-
-        this.change = change;
-
-        return this.change;
-    }
-
-    emergeWhenPaidAll(endProcess) {
-        this.paid >= this.toPay && endProcess();
-    }
-
-    getTotal(products) {
-        let total = 0;
-
-        for (const target in products) {
-            const prods = products[target];
-
-            total += prods.reduce((acc, curr) => {
-                return acc + curr.price;
-            }, 0);
-        }
-
-        return total;
-    }
-
-    getAmount(products) {
-        let amount = 0;
-
-        for (const target in products) {
-            amount += products[target].length;
-        }
-
-        return amount;
     }
 }

@@ -1,31 +1,29 @@
 class MenuBoard {
-    constructor(data) {
+    constructor(data, cartToBill) {
         this.products = [];
         this.createProducts(data);
+        this.cartToBill = cartToBill;
+        this.addEventListener();
     }
 
-    createProducts(products) {
-        this.products = products.map(product => {
-            const newProduct = new Product(product);
+    createProducts(data) {
+        this.products = data.map(prod => {
+            const product = new Product(prod);
 
-            newProduct.element.querySelector(".menu-title").textContent =
-                newProduct.name;
+            product.element.querySelector(".menu-title").textContent =
+                product.name;
 
-            return newProduct;
+            return product;
         });
-
-        return this;
     }
 
-    addClickEvent(func) {
+    addEventListener() {
         this.products.forEach(product => {
-            const { element, handleClick } = product;
+            const { element, name, price } = product.sendData();
 
-            element.addEventListener(
-                "click",
-                (event, productObject = product) =>
-                    handleClick(event, productObject, func)
-            );
+            element.addEventListener("click", () => {
+                this.cartToBill({ name, price });
+            });
         });
     }
 }
@@ -42,11 +40,13 @@ class Product {
             .cloneTemplate("menu-template")
             .appendTemplate("board")
             .getElement("menu");
-
-        return this;
     }
 
-    handleClick(event, productObj, func) {
-        return func(event, productObj);
+    sendData() {
+        return {
+            element: this.element,
+            name: this.name,
+            price: this.price
+        };
     }
 }

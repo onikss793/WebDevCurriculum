@@ -25,7 +25,29 @@ class Data {
         ];
     }
 
+    sendDiscountData() {
+        const discount = [
+            {
+                products: ["아메리카노", "카페라떼"],
+                target: {
+                    아포가토: 1000
+                }
+            },
+            {
+                products: ["핸드드립커피"],
+                target: {
+                    에스프레소: 3000
+                }
+            }
+        ];
+
+        this.discountInfo = discount;
+
+        return this.discountInfo;
+    }
+
     save(data) {
         this.history.push({ timestamp: Date(), ...data });
+        console.log(this.history);
     }
 }

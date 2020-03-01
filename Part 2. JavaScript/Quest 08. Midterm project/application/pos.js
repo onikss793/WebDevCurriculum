@@ -1,46 +1,38 @@
 class Pos {
     constructor() {
-        this.clearPos()
-            .loadPos()
-            .eventSetUp();
+        this.startPos();
+        this.loadPos();
+        this.setDiscount();
+        this.getReadyPos();
     }
 
-    clearPos() {
-        this.bill = new Bill();
-        this.cart = new Cart();
-        this.payment = new Payment();
+    startPos() {
+        this.pos = new Template()
+            .cloneTemplate("pos-template")
+            .appendTemplate("pos")
+            .getElement("pos");
+    }
 
-        return this;
+    getReadyPos() {
+        this.cart = new Cart(this.discount.checkDiscount);
+        this.bill = new Bill(this.endPay);
     }
 
     loadPos() {
         this.data = new Data();
-        this.menuBoard = new MenuBoard(this.data.menu);
-        this.calculator = new Calculator();
-
-        this.menuBoard;
-
-        return this;
+        this.menuBoard = new MenuBoard(this.data.menu, this.cartToBill);
+        this.calculator = new Calculator(this.calcToBill);
+        this.payment = new Payment(this.sendStatus);
+        this.discountData = this.data.sendDiscountData();
     }
 
-    eventSetUp() {
-        this.payment.addClickEvent(this.sendStatus);
-        this.calculator.addClickEvent(this.calcToBill);
-        this.menuBoard.addClickEvent((event, productObj) =>
-            this.cartToBill(event, productObj)
-        );
-    }
-
-    cartToBill = (event, productObj) => {
-        this.cart.addToCart(event, productObj);
-        this.bill.getData(this.cart).printBill();
+    cartToBill = productData => {
+        this.cart.addToCart(productData);
+        this.bill.getData(this.cart.sendData());
     };
 
     calcToBill = money => {
-        this.bill
-            .getPaid(money)
-            .printBill()
-            .emergeWhenPaidAll(this.endProcess);
+        this.bill.pay(money);
     };
 
     sendStatus = status => {
@@ -48,12 +40,18 @@ class Pos {
             this.resetPos();
         } else if (status === "card") {
             this.payment.setStatus("card");
-            this.calcToBill(this.bill.toPay);
+            this.bill.pay(this.bill.toPay - this.bill.paid);
         }
     };
 
-    endProcess = () => {
-        this.alert().saveData();
+    setDiscount() {
+        this.discount = new Discount();
+        this.discount.setDiscountPolicy(this.discountData);
+    }
+
+    endPay = () => {
+        new Alert();
+        this.saveData();
 
         setTimeout(this.resetPos, 2000);
     };
@@ -69,8 +67,6 @@ class Pos {
             bill,
             payment: this.payment.status
         });
-
-        return this;
     };
 
     resetPos = () => {
@@ -86,12 +82,6 @@ class Pos {
 
         alert && document.querySelector(".pos").removeChild(alert);
 
-        this.clearPos();
+        this.getReadyPos();
     };
-
-    alert() {
-        new Alert();
-
-        return this;
-    }
 }

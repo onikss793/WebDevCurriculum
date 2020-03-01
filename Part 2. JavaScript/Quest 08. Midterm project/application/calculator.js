@@ -1,8 +1,10 @@
 class Calculator {
-    constructor() {
+    constructor(calcToBill) {
         this.screen = 0;
-
-        this.createCalc().printScreen();
+        this.calcToBill = calcToBill;
+        this.createCalc();
+        this.printScreen();
+        this.addClickEvent();
     }
 
     createCalc() {
@@ -10,33 +12,26 @@ class Calculator {
             .cloneTemplate("calc-template")
             .appendTemplate("calc")
             .getElement("calc");
-
-        return this;
     }
 
-    addClickEvent(sendToBill) {
+    addClickEvent() {
         const pads = Array.from(this.calc.querySelectorAll(".pad"));
 
         pads.forEach(pad =>
-            pad.addEventListener("click", event =>
-                this.verifyPad(event, sendToBill).printScreen()
-            )
+            pad.addEventListener("click", event => {
+                this.verifyPad(event);
+                this.printScreen();
+            })
         );
-
-        return this;
     }
 
-    printScreen() {
-        this.calc.querySelector(".calc-screen").textContent = this.screen;
-
-        return this;
-    }
-
-    verifyPad(event, sendToBill) {
+    verifyPad(event) {
         const content = event.target.textContent;
 
         if (isNaN(Number(content))) {
-            content === "입력" && this.screen !== 0 && sendToBill(this.screen);
+            content === "입력" &&
+                this.screen !== 0 &&
+                this.calcToBill(this.screen);
 
             this.setScreen(0);
         } else {
@@ -44,8 +39,10 @@ class Calculator {
                 ? this.setScreen(content)
                 : this.setScreen(this.screen + content);
         }
+    }
 
-        return this;
+    printScreen() {
+        this.calc.querySelector(".calc-screen").textContent = this.screen;
     }
 
     setScreen(number) {

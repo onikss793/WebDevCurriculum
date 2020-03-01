@@ -9,6 +9,7 @@
         <script src="data.js"></script>
         <script src="template.js"></script>
         <script src="menu.js"></script>
+        <script src="discount.js"></script>
         <script src="cart.js"></script>
         <script src="bill.js"></script>
         <script src="calculator.js"></script>
@@ -19,7 +20,9 @@
     </head>
 
     <body>
-        <div class="pos">
+        <div class="pos"></div>
+
+        <template class="pos-template">
             <div class="pos-left">
                 <div class="cart">
                     <table class="cart-table">
@@ -50,7 +53,7 @@
                     <button class="cancel">취소</button>
                 </div>
             </div>
-        </div>
+        </template>
 
         <template class="alert-template">
             <div class="alert">
@@ -59,14 +62,7 @@
         </template>
 
         <template class="cart-template">
-            <tr class="product">
-                <td class="product-index"></td>
-                <td class="product-name"></td>
-                <td class="product-count"></td>
-                <td class="product-price"></td>
-                <td class="product-discount"></td>
-                <td class="product-total"></td>
-            </tr>
+            <tr class="product"></tr>
         </template>
 
         <template class="calc-template">

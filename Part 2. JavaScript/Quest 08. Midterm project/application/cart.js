@@ -1,10 +1,43 @@
 class Cart {
-    constructor() {
+    constructor(checkDiscount) {
         this.product = {};
         this.rowElements = [];
+        this.checkDiscount = checkDiscount;
     }
 
-    addToCart(event, productObj) {
+    sendData() {
+        const products = Object.keys(this.product).map(
+            key => this.product[key]
+        );
+
+        const total = this.getTotal(products);
+
+        const amount = this.getAmount(products);
+
+        return {
+            amount,
+            total,
+            discount: 0
+        };
+    }
+
+    getTotal(products) {
+        return products
+            .map(prods =>
+                prods.reduce((acc, curr) => {
+                    return acc + curr.price;
+                }, 0)
+            )
+            .reduce((acc, curr) => acc + curr);
+    }
+
+    getAmount(products) {
+        return products
+            .map(product => product.length)
+            .reduce((acc, curr) => acc + curr);
+    }
+
+    addToCart(productObj) {
         const target = this.deleteSpace(productObj.name);
 
         if (this.isCartEmpty()) {
@@ -22,8 +55,6 @@ class Cart {
         const row = this.getRow(target);
 
         this.printRow(target, row);
-
-        return this;
     }
 
     deleteSpace(string) {
@@ -51,13 +82,10 @@ class Cart {
             .cloneTemplate("cart-template")
             .appendTemplate("cart-table tbody")
             .getElement("product");
-
         const className = this.deleteSpace(target);
 
         row.classList.add(className);
         this.rowElements.push(row);
-
-        return this;
     }
 
     printRow(target, row) {
@@ -73,9 +101,23 @@ class Cart {
         row.innerHTML = text;
     }
 
+    sendDataForDiscount() {
+        let data = [];
+
+        for (const key in this.product) {
+            for (const product of this.product[key]) {
+                data.push(product.name);
+            }
+        }
+
+        return data;
+    }
+
     extractData(target) {
         const items = Object.keys(this.product);
         const products = this.product[target];
+
+        this.checkDiscount(this.sendDataForDiscount());
 
         return products.reduce((acc, curr) => {
             return {
@@ -91,8 +133,8 @@ class Cart {
     }
 
     getRow(target) {
-        for (let row of this.rowElements) {
-            const classList = Array.from(row.classList);
+        for (const row of this.rowElements) {
+            const classList = [...row.classList];
 
             if (classList.includes(target)) {
                 return row;

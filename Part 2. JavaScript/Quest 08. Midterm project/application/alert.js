@@ -8,7 +8,5 @@ class Alert {
             .cloneTemplate("alert-template")
             .appendTemplate("pos")
             .getElement("alert");
-
-        return this;
     }
 }
