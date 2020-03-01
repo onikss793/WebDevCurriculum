@@ -1,7 +1,8 @@
 class Cart {
-    constructor() {
+    constructor(checkDiscount) {
         this.product = {};
         this.rowElements = [];
+        this.checkDiscount = checkDiscount;
     }
 
     sendData() {
@@ -9,23 +10,31 @@ class Cart {
             key => this.product[key]
         );
 
-        const total = products
-            .map(prods =>
-                prods.reduce((acc, curr) => {
-                    return acc + curr.price;
-                }, 0)
-            )
-            .reduce((acc, curr) => acc + curr);
+        const total = this.getTotal(products);
 
-        const amount = products
-            .map(product => product.length)
-            .reduce((acc, curr) => acc + curr);
+        const amount = this.getAmount(products);
 
         return {
             amount,
             total,
             discount: 0
         };
+    }
+
+    getTotal(products) {
+        return products
+            .map(prods =>
+                prods.reduce((acc, curr) => {
+                    return acc + curr.price;
+                }, 0)
+            )
+            .reduce((acc, curr) => acc + curr);
+    }
+
+    getAmount(products) {
+        return products
+            .map(product => product.length)
+            .reduce((acc, curr) => acc + curr);
     }
 
     addToCart(productObj) {
@@ -92,9 +101,23 @@ class Cart {
         row.innerHTML = text;
     }
 
+    sendDataForDiscount() {
+        let data = [];
+
+        for (const key in this.product) {
+            for (const product of this.product[key]) {
+                data.push(product.name);
+            }
+        }
+
+        return data;
+    }
+
     extractData(target) {
         const items = Object.keys(this.product);
         const products = this.product[target];
+
+        this.checkDiscount(this.sendDataForDiscount());
 
         return products.reduce((acc, curr) => {
             return {
@@ -110,10 +133,12 @@ class Cart {
     }
 
     getRow(target) {
-        return this.rowElements.reduce((acc, row) => {
-            if ([...row.classList].includes(target)) {
+        for (const row of this.rowElements) {
+            const classList = [...row.classList];
+
+            if (classList.includes(target)) {
                 return row;
             }
-        });
+        }
     }
 }

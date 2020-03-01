@@ -2,6 +2,7 @@ class Pos {
     constructor() {
         this.startPos();
         this.loadPos();
+        this.setDiscount();
         this.getReadyPos();
     }
 
@@ -13,7 +14,7 @@ class Pos {
     }
 
     getReadyPos() {
-        this.cart = new Cart();
+        this.cart = new Cart(this.discount.checkDiscount);
         this.bill = new Bill(this.endPay);
     }
 
@@ -22,6 +23,7 @@ class Pos {
         this.menuBoard = new MenuBoard(this.data.menu, this.cartToBill);
         this.calculator = new Calculator(this.calcToBill);
         this.payment = new Payment(this.sendStatus);
+        this.discountData = this.data.sendDiscountData();
     }
 
     cartToBill = productData => {
@@ -41,6 +43,11 @@ class Pos {
             this.bill.pay(this.bill.toPay - this.bill.paid);
         }
     };
+
+    setDiscount() {
+        this.discount = new Discount();
+        this.discount.setDiscountPolicy(this.discountData);
+    }
 
     endPay = () => {
         new Alert();
