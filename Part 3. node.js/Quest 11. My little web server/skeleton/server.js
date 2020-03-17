@@ -1,29 +1,35 @@
-const http = require("http");
-const url = require("url");
-const querystring = require("querystring");
+const http = require('http');
+const url = require('url');
+const querystring = require('querystring');
 
 http.createServer((req, res) => {
     // TODO: 이 곳을 채워넣으세요..!
     const parsed_url = url.parse(req.url);
 
     route(parsed_url, req, res);
-}).listen(8080, () => console.log("Listening to PORT: ", 8080));
+}).listen(8080, () => console.log('Listening to PORT: ', 8080));
 
 function route(url, req, res) {
-    if (url.pathname === "/foo") {
+    if (url.pathname === '/foo') {
         switch (req.method) {
-            case "GET":
+            case 'GET':
                 text = handleGetFoo(req, res, url);
 
-            case "POST":
+            case 'POST':
                 text = handlePostFoo(req, res, url);
         }
     }
 }
 
 function handlePostFoo(req, res) {
-    req.on("data", data => {
-        const body = encodeBody(req, data);
+    let serverData = '';
+
+    req.on('data', data => {
+        serverData += data;
+    });
+
+    req.on('end', () => {
+        const body = encodeBody(req, serverData);
 
         res.end(responseForBar(body));
     });
@@ -31,29 +37,29 @@ function handlePostFoo(req, res) {
 
 function encodeBody(req, data) {
     const contentType = detectMultipartFormData(req)
-        ? "multipart/form-data"
-        : req.headers["content-type"];
+        ? 'multipart/form-data'
+        : req.headers['content-type'];
 
     switch (contentType) {
-        case "application/json": {
+        case 'application/json': {
             const body = JSON.parse(data);
 
             return body;
         }
 
-        case "application/x-www-form-urlencoded": {
+        case 'application/x-www-form-urlencoded': {
             const body = urlEncoded(data);
 
             return body;
         }
 
-        case "multipart/form-data": {
+        case 'multipart/form-data': {
             const body = data.toString();
 
             const arr = body
-                .split("----------------------------")
-                .join("")
-                .split("\r\n");
+                .split('----------------------------')
+                .join('')
+                .split('\r\n');
 
             const encodedBody = getKeyValue(arr);
 
@@ -63,26 +69,26 @@ function encodeBody(req, data) {
 }
 
 function getKeyValue(arr) {
-    let key = "";
-    let value = "";
+    let key = '';
+    let value = '';
     let objects = [];
 
     for (let i = 0; i < arr.length; i++) {
         const el = arr[i];
 
-        if (el === "" && i < arr.length - 1) {
+        if (el === '' && i < arr.length - 1) {
             value += arr[i + 1];
         }
 
-        if (el.match("Content-Disposition: form-data; ")) {
+        if (el.match('Content-Disposition: form-data; ')) {
             key += el.slice(el.indexOf('"') + 1, el.lastIndexOf('"'));
         }
 
         if (key.length && value.length) {
             objects.push({ [key]: value });
 
-            key = "";
-            value = "";
+            key = '';
+            value = '';
         }
     }
 
@@ -92,7 +98,7 @@ function getKeyValue(arr) {
 }
 
 function detectMultipartFormData(req) {
-    return req.headers["content-type"].match("multipart/form-data");
+    return req.headers['content-type'].match('multipart/form-data');
 }
 
 function handleGetFoo(req, res, url) {
@@ -111,8 +117,8 @@ function urlEncoded(buffer) {
     const stringifiedBuffer = buffer.toString();
 
     const body = stringifiedBuffer
-        .split("&")
-        .map(str => str.split("="))
+        .split('&')
+        .map(str => str.split('='))
         .map(pair => pair.reduce((acc, curr) => ({ [acc]: curr })))
         .reduce((acc, curr) => ({ ...acc, ...curr }));
 
