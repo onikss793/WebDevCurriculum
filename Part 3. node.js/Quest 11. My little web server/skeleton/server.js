@@ -10,13 +10,16 @@ http.createServer((req, res) => {
 }).listen(8080, () => console.log('Listening to PORT: ', 8080));
 
 function route(url, req, res) {
+    console.log('METHOD: ', req.method);
     if (url.pathname === '/foo') {
         switch (req.method) {
             case 'GET':
-                text = handleGetFoo(req, res, url);
+                handleGetFoo(req, res, url);
+                break;
 
             case 'POST':
-                text = handlePostFoo(req, res, url);
+                handlePostFoo(req, res, url);
+                break;
         }
     }
 }
@@ -108,9 +111,9 @@ function handleGetFoo(req, res, url) {
 }
 
 function responseForBar(body) {
-    const text = body && body.bar;
+    const text = body ? body.bar : 'bar';
 
-    return `Hello, ${text}`;
+    return JSON.stringify({ message: `Hello, ${text}` });
 }
 
 function urlEncoded(buffer) {
