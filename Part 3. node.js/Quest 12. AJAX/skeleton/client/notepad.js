@@ -59,28 +59,25 @@ class Note {
         this.content = content;
         this.tab = tab;
         this.pad = pad;
-        this.data = data;
 
-        this.loadData();
+        data && this.loadData(data);
 
         this.tab.createEvent(this.selectTab, this.content);
         this.pad.createEvent(this.content);
     }
 
-    loadData() {
-        if (this.data) {
-            Object.keys(this.data).forEach(key => {
-                let element;
+    loadData(data) {
+        Object.keys(data).forEach(key => {
+            let element = this.getElementFromKey(key);
 
-                if (key === 'title') {
-                    element = this.tab.element;
-                } else if (key === 'body') {
-                    element = this.pad.element;
-                }
+            element && this.content.type(key, data[key], element);
+        });
+    }
 
-                this.content.type(key, this.data[key], element);
-            });
-        }
+    getElementFromKey(key) {
+        if (key === 'title') return this.tab.element;
+        if (key === 'body') return this.pad.element;
+        else return;
     }
 
     selectTab = () => {

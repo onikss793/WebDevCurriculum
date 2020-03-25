@@ -56,11 +56,16 @@ class SaveFile {
                 body: JSON.stringify(data)
             }).then(res => res.json());
 
-            if (response.message === 'success') alert('Succesfully Saved');
-            else alert(`ERROR: ${response.message}`);
+            this.reactToResponse(response);
         } catch (err) {
             console.log('ERROR: ', err.message);
         }
+    }
+
+    reactToResponse(response) {
+        response.message === 'success'
+            ? alert('Successfully Saved')
+            : alert(`Error: ${response.message}`);
     }
 }
 
@@ -88,12 +93,8 @@ class LoadFile {
                 method: 'GET'
             }).then(res => res.json());
 
-            if (response.message) {
-                let text = '불러올 파일을 입력하세요 \n';
-
-                response.data.forEach(res => {
-                    text += res.title + '.txt' + '\n';
-                });
+            if (this.checkResposne(response)) {
+                let text = this.listUpFiles(response);
 
                 const answer = prompt(text);
 
@@ -108,18 +109,26 @@ class LoadFile {
         }
     };
 
-    getFile = async name => {
+    checkResposne(response) {
+        return response.message === 'success';
+    }
+
+    listUpFiles(response) {
+        let text = '불러올 파일을 입력하세요 \n';
+
+        response.data.forEach(res => {
+            text += res.title + '.txt' + '\n';
+        });
+
+        return text;
+    }
+
+    getFile = name => {
         const fileName = this.renderTitle(name);
 
-        try {
-            const response = await fetch(
-                'http://localhost:8080/memo?name=' + fileName
-            ).then(res => res.json());
-
-            return response;
-        } catch (err) {
-            console.error(err);
-        }
+        return fetch('http://localhost:8080/memo?name=' + fileName).then(res =>
+            res.json()
+        );
     };
 
     renderTitle = string => {
