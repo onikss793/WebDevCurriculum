@@ -1,14 +1,82 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<link rel="stylesheet" href="/style.css">
-		<script src="/notepad.js"></script>
-	</head>
-	<body>
-		<!-- TODO: 이 곳을 채워 클라이언트를 만들어 보세요 -->
-		<script>
-			let notepad = new Notepad();
-		</script>
-	</body>
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" href="./reset.css" />
+        <link rel="stylesheet" href="./style.css" />
+        <script src="./classes/template.js"></script>
+        <script src="./classes/content.js"></script>
+        <script src="./classes/board.js"></script>
+        <script src="./classes/tools.js"></script>
+        <script src="./classes/tab.js"></script>
+        <script src="./classes/pad.js"></script>
+        <sciprt src="./classes/modal.js"></sciprt>
+        <script src="./notepad.js"></script>
+    </head>
+    <body>
+        <!-- TODO: 이 곳을 채워 클라이언트를 만들어 보세요 -->
+        <div class="notepad"></div>
+
+        <template class="modal-template">
+            <div class="modal-background">
+                <div class="modal">
+                    <div class="modal-header"></div>
+                    <div class="modal-body">
+                        <form class="file-list"></form>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template class="modal-list-template"
+            ><input type="radio" class="modal-list" />
+            <label></label>
+        </template>
+
+        <template class="board-template">
+            <div class="board"></div>
+        </template>
+
+        <template class="tabs-template">
+            <div class="tabs"></div>
+        </template>
+
+        <template class="tab-template">
+            <input class="tab" placeholder="제목" />
+        </template>
+
+        <template class="tools-template">
+            <div class="tools">
+                <button class="tool new-file">새 파일</button>
+                <button class="tool save">저장</button>
+                <button class="tool load">불러오기</button>
+            </div>
+        </template>
+
+        <template class="pad-template">
+            <textarea class="pad"></textarea>
+        </template>
+
+        <script>
+            let notepad = new Notepad();
+        </script>
+    </body>
 </html>
+
+<!-- const xhr = new XMLHttpRequest();
+
+xhr.onreadystatechange = function() {
+    if (this.readyState === 4) {
+        if (this.status >= 200 && this.state < 400) {
+			console.log(this.response);
+        } else {
+			console.log('ERROR: ', this);
+        }
+    } else {
+        console.log('ERROR: ', this);
+    }
+};
+
+xhr.open('GET', 'http://127.0.0.1:8080', true);
+xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+xhr.send(); -->
