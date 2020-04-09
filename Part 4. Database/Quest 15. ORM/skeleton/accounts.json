@@ -1,0 +1,5 @@
+[
+    { "id": 1, "name": "철수", "password": "1" },
+    { "id": 2, "name": "영희", "password": "1" },
+    { "id": 3, "name": "민수", "password": "1" }
+]
