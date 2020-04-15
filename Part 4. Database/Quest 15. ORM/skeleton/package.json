@@ -1,0 +1,17 @@
+{
+    "private": true,
+    "dependencies": {
+        "cookie-parser": "^1.4.5",
+        "cors": "^2.8.5",
+        "express": "*",
+        "express-session": "^1.17.0",
+        "morgan": "^1.10.0",
+        "mysql2": "^2.1.0",
+        "nodemon": "^2.0.2",
+        "sequelize": "^5.21.6"
+    },
+    "scripts": {
+        "start": "node server.js",
+        "dev": "NODE_ENV=dev nodemon server.js"
+    }
+}

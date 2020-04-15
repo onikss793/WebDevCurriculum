@@ -1,1 +1,20 @@
-[{"title":"제목을 적으시오","body":"212341234","cursor":9,"selected":true}]
+[
+    {
+        "title": "제목을",
+        "body": "212341234",
+        "cursor_position": 9,
+        "selected": true,
+        "in_process": true,
+        "is_saved": true,
+        "user_id": 1
+    },
+    {
+        "title": "hello",
+        "body": "body ",
+        "cursor_position": 5,
+        "selected": false,
+        "in_process": true,
+        "is_saved": false,
+        "user_id": 2
+    }
+]

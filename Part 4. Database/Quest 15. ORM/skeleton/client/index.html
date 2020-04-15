@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" href="./reset.css" />
+        <link rel="stylesheet" href="./style.css" />
+        <script src="./classes/api.js"></script>
+        <script src="./classes/template.js"></script>
+        <script src="./classes/event.js"></script>
+        <script src="./classes/content.js"></script>
+        <script src="./classes/board.js"></script>
+        <script src="./classes/tools.js"></script>
+        <script src="./classes/tab.js"></script>
+        <script src="./classes/pad.js"></script>
+        <script src="./classes/modal.js"></script>
+        <script src="./classes//account.js"></script>
+        <script src="./notepad.js"></script>
+    </head>
+
+    <body class="body">
+        <!-- TODO: 이 곳을 채워 클라이언트를 만들어 보세요 -->
+        <div class="notepad">
+            <div class="username"></div>
+        </div>
+
+        <template class="modal-template">
+            <div class="modal-background">
+                <div class="modal">
+                    <div class="modal-header">
+                        로그인
+                        <button class="modal-close">X</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="login-inputs">
+                            <input
+                                class="id"
+                                type="text"
+                                placeholder="아이디"
+                            />
+                            <input
+                                class="password"
+                                type="password"
+                                placeholder="비밀번호"
+                            />
+                            <input class="login" type="button" value="login" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template class="board-template">
+            <div class="board"></div>
+        </template>
+
+        <template class="tabs-template">
+            <div class="tabs"></div>
+        </template>
+
+        <template class="tab-template">
+            <div class="tab-container">
+                <input class="tab" placeholder="제목" />
+                <button class="close">X</button>
+            </div>
+        </template>
+
+        <template class="tools-template">
+            <div class="tools">
+                <button class="tool new-file">새 파일</button>
+                <button class="tool save">저장</button>
+                <button class="tool load">불러오기</button>
+                <button class="tool account"></button>
+            </div>
+        </template>
+
+        <template class="pad-template">
+            <textarea class="pad"></textarea>
+        </template>
+
+        <script>
+            let notepad = new Notepad();
+        </script>
+    </body>
+</html>
