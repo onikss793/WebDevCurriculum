@@ -52,12 +52,12 @@ Vue.js의 컴포넌트는 하나의 인스턴스이다. 그래서 먼저 뿌리�
 <div id="app">{{ msg }} </div>
 
 <script>
-	const vm = new Vue({
-		el: '#app',
-		data: {
-			msg: 'Hello World'
-		}
-	});
+const vm = new Vue({
+    el: '#app',
+    data: {
+        msg: 'Hello World',
+    },
+});
 </script>
 ```
 
@@ -73,12 +73,12 @@ Vue.js의 컴포넌트는 하나의 인스턴스이다. 그래서 먼저 뿌리�
 </div>
 
 <script>
-	var vm = new Vue({
-		el: '#app',
-		methods: {
-			onClick: () => alert('Hello World!')
-		}
-	});
+var vm = new Vue({
+    el: '#app',
+    methods: {
+        onClick: () => alert('Hello World!'),
+    },
+});
 </script>
 ```
 
@@ -88,13 +88,13 @@ Vue.js의 컴포넌트는 하나의 인스턴스이다. 그래서 먼저 뿌리�
 <div id="app">{{ msg }}</div>
 
 <script>
-	var vm = new Vue({
-		el: '#app',
-		data: { name: 'Chris' },
-		computed: {
-			msg: () => `Hello, ${this.name}`
-		}
-	})
+var vm = new Vue({
+    el: '#app',
+    data: { name: 'Chris' },
+    computed: {
+        msg: () => `Hello, ${this.name}`,
+    },
+});
 </script>
 ```
 
@@ -106,18 +106,19 @@ beforeCreate => created => beforeMount => mounted => (beforeUpdate => updated) =
 
 위와 같은 큰 줄기의 이벤트 사이클에서 각각의 시점마다 이벤트 훅을 사용할 수 있다.
 
-Vue.js는 양방향 데이터 바인딩을 사용한다. 컴포넌트를 만들 수 있기 때문에 부모 컴포넌트와 자식 컴포넌트가 생겨나게 되는데, 이러한 트리 구조가 생기면서 각 컴포넌의 데이터 교류에 대한 흐름을 말한다.
+~~Vue.js는 양방향 데이터 바인딩을 사용한다. 컴포넌트를 만들 수 있기 때문에 부모 컴포넌트와 자식 컴포넌트가 생겨나게 되는데, 이러한 트리 구조가 생기면서 각 컴포넌의 데이터 교류에 대한 흐름을 말한다.~~  
+~~기본적으로 데이터는 부모 => 자녀 한 방향으로만 전달된다. 이것은 React의 단방향 데이터 흐름과 같다. 따라서 React에서처럼 부모 컴포넌트에서 자식 컴포넌트에게 데이터를 전달해 출력할 수 있다.~~
 
-기본적으로 데이터는 부모 => 자녀 한 방향으로만 전달된다. 이것은 React의 단방향 데이터 흐름과 같다. 따라서 React에서처럼 부모 컴포넌트에서 자식 컴포넌트에게 데이터를 전달해 출력할 수 있다.
+Vue.js는 데이터 바인딩이라는 것은 각 컴포넌트 간의 관계를 이야기하는 것이 아니다. View <=> View Model 사이에서의 관계를 이야기 하는 것이다. Vue.js가 양방향 데이터 바인딩을 지원한다는 것은 `v-model`을 사용해 자바스크립트 객체와 실제 DOM 엘리먼트가 항상 동기화되어 있다는 것을 의미한다. 반면, React 같은 경우는 양방향 데이터 바인딩을 지원하지 않기 때문에 자바스크립트 객체와 실제 DOM 엘리먼트 사이의 데이터 동기화를 위해 추가적인 작업이 필요하다.
 
 ```vue
 <Child name="Chris"></Child>
 
 <script>
-	Vue.component('Child', {
-	el: '#child',
-	props: ['name']
-	});
+Vue.component('Child', {
+    el: '#child',
+    props: ['name'],
+});
 </script>
 ```
 
@@ -129,14 +130,14 @@ Vue.js는 양방향 데이터 바인딩을 사용한다. 컴포넌트를 만들 
 <Child v-on:typed="onTyped"></Child>
 
 <script>
-	Vue.component('NameForm', {
-	el: '#child',
-	methods: {
-		onClick: function() {
-		this.$emit('typed');
-		}
-	}
-	});
+Vue.component('NameForm', {
+    el: '#child',
+    methods: {
+        onClick: function () {
+            this.$emit('typed');
+        },
+    },
+});
 </script>
 ```
 
@@ -164,13 +165,8 @@ Vue.js에서 양방향 데이터 바인딩이라는 것은 위에서 말했듯�
 <div id="app">
     <input type="text" v-model="name" />
     {{ name }}
-</div>;
-new Vue({
-    el: '#app',
-    data: {
-        name: 'Hello',
-    },
-});
+</div>
+; new Vue({ el: '#app', data: { name: 'Hello', }, });
 ```
 
 이렇게 `v-model`을 설정함으로써 input 태그에 값을 입력할 때 뷰인스턴스에 dta를 바로 변경시킬 수 있다.
