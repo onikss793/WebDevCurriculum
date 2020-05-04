@@ -30,10 +30,9 @@ const createNote = async (parent, args, { res, user_id }) => {
 		};
 
 		await noteDao.createOrUpdate({ title: noteData.title }, noteData);
-
 		return { success: true };
 	} catch (err) {
-		throw err;
+		return err;
 	}
 };
 
