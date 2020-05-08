@@ -46,7 +46,15 @@ const clearCookies = (res, ...arg) => {
 const setUpData = async () => {
 	try {
 		const userDao = require('./dao/userDao');
+		const noteDao = require('./dao/noteDao');
 		const accountMockUp = require('./accounts.json');
+		const noteMockUp = require('./notes.json');
+
+		if (process.env.NODE_ENV === 'test') {
+			for await (const { title, body, cursor_position, selected, user_id } of noteMockUp) {
+				await noteDao.insertNote({ title, body, cursor_position, selected, user_id });
+			}
+		}
 
 		for await (const { name: username, password } of accountMockUp) {
 			await userDao.insertUser({ username, password });
