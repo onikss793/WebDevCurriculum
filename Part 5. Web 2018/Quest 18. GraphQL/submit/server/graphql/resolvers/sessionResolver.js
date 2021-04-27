@@ -2,8 +2,8 @@ const sessionDataDao = require('../../dao/sessionDataDao');
 
 const loadSessionData = async (parent, args, { user_id }) => {
 	try {
-		const data = await sessionDataDao.findUserSession(user_id).then(d => d && d.toJSON());
-		data.notes = data && JSON.parse(data.notes);
+		const data = await sessionDataDao.findUserSession(user_id).then(d => d && d.toJSON()) || {};
+		data.notes = Object.keys(data).length ? JSON.parse(data.notes) : [];
 
 		return { user_id, notes: data.notes };
 	} catch (err) {
