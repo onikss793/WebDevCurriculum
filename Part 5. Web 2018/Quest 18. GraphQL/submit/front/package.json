@@ -17,7 +17,9 @@
     "preset": "jest-puppeteer",
     "globals": {
       "URL": "http://localhost:8080",
-      "testMatch": ["__test__/*"]
+      "testMatch": [
+        "__test__/*"
+      ]
     }
   },
   "dependencies": {
@@ -30,6 +32,7 @@
   },
   "devDependencies": {
     "@types/jest": "^25.2.1",
+    "@types/puppeteer": "^2.0.1",
     "@vue/cli-plugin-babel": "~4.3.0",
     "@vue/cli-plugin-eslint": "~4.3.0",
     "@vue/cli-service": "~4.3.0",
